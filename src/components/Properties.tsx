@@ -187,30 +187,53 @@ export default function Properties() {
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [agents, setAgents] = useState<Agent[]>([]);
-  const [amenities, setAmenities] = useState<Amenity[]>([]);
+  const [properties, setProperties] = useState<Property[]>(() => {
+    const saved = localStorage.getItem('proppost_properties_cache');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [agents, setAgents] = useState<Agent[]>(() => {
+    const saved = localStorage.getItem('proppost_agents_cache');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [amenities, setAmenities] = useState<Amenity[]>(() => {
+    const saved = localStorage.getItem('proppost_amenities_cache');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [isLoading, setIsLoading] = useState(true);
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAdding, setIsAdding] = useState(() => {
+    return localStorage.getItem('proppost_property_is_adding') === 'true';
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
-  const [newProperty, setNewProperty] = useState<Partial<Property>>({
-    title: '',
-    price: 0,
-    location_city: '',
-    location_area: '',
-    bedrooms: 0,
-    bathrooms: 0,
-    parking: 0,
-    floor_size_m2: 0,
-    short_description: '',
-    listing_type: 'sale',
-    status: 'active',
-    agent_id: '',
-    amenities: [],
-    images: []
+  const [newProperty, setNewProperty] = useState<Partial<Property>>(() => {
+    const saved = localStorage.getItem('proppost_property_draft');
+    return saved ? JSON.parse(saved) : {
+      title: '',
+      price: 0,
+      location_city: '',
+      location_area: '',
+      bedrooms: 0,
+      bathrooms: 0,
+      parking: 0,
+      floor_size_m2: 0,
+      short_description: '',
+      listing_type: 'sale',
+      status: 'active',
+      agent_id: '',
+      amenities: [],
+      images: []
+    };
   });
+
+  // Persist draft and adding state
+  useEffect(() => {
+    localStorage.setItem('proppost_property_draft', JSON.stringify(newProperty));
+  }, [newProperty]);
+
+  useEffect(() => {
+    localStorage.setItem('proppost_property_is_adding', isAdding.toString());
+  }, [isAdding]);
 
   const fetchProperties = async () => {
     if (!token) return;
@@ -221,6 +244,7 @@ export default function Properties() {
       if (res.ok) {
         const data = await res.json();
         setProperties(data);
+        localStorage.setItem('proppost_properties_cache', JSON.stringify(data));
       }
     } catch (error) {
       console.error('Error fetching properties:', error);
@@ -238,6 +262,7 @@ export default function Properties() {
       if (res.ok) {
         const data = await res.json();
         setAgents(data);
+        localStorage.setItem('proppost_agents_cache', JSON.stringify(data));
       }
     } catch (error) {
       console.error('Error fetching agents:', error);
@@ -253,6 +278,7 @@ export default function Properties() {
       if (res.ok) {
         const data = await res.json();
         setAmenities(data);
+        localStorage.setItem('proppost_amenities_cache', JSON.stringify(data));
       }
     } catch (error) {
       console.error('Error fetching amenities:', error);
@@ -317,7 +343,7 @@ export default function Properties() {
 
       if (response.ok) {
         setIsAdding(false);
-        setNewProperty({
+        const resetProperty = {
           title: '',
           price: 0,
           location_city: '',
@@ -332,7 +358,9 @@ export default function Properties() {
           agent_id: '',
           amenities: [],
           images: []
-        });
+        };
+        setNewProperty(resetProperty);
+        localStorage.removeItem('proppost_property_draft');
         fetchProperties();
       } else {
         const error = await response.json();
@@ -960,3 +988,4 @@ const StatusBadge: React.FC<{ status: Property['status'] }> = ({ status }) => {
     </span>
   );
 }
+

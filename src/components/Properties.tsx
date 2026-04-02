@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  LayoutGrid, 
+  LayoutDashboard, 
   List, 
   Search, 
   Filter, 
   MoreHorizontal, 
   MapPin, 
-  Bed, 
+  BedDouble, 
   Bath, 
-  Square,
+  Maximize,
   ChevronDown,
   Edit2,
   Archive,
@@ -120,21 +120,21 @@ const PropertyPreview: React.FC<{ property: Partial<Property>, agents: Agent[], 
           <div className="grid grid-cols-3 gap-4 py-6 border-y border-gray-50">
             <div className="flex flex-col items-center gap-1">
               <div className="p-2 bg-indigo-50 rounded-xl text-indigo-600">
-                <Bed size={20} />
+                <BedDouble size={20} strokeWidth={1.5} />
               </div>
               <span className="text-xs font-black text-gray-900">{property.bedrooms || 0}</span>
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Beds</span>
             </div>
             <div className="flex flex-col items-center gap-1">
               <div className="p-2 bg-indigo-50 rounded-xl text-indigo-600">
-                <Bath size={20} />
+                <Bath size={20} strokeWidth={1.5} />
               </div>
               <span className="text-xs font-black text-gray-900">{property.bathrooms || 0}</span>
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Baths</span>
             </div>
             <div className="flex flex-col items-center gap-1">
               <div className="p-2 bg-indigo-50 rounded-xl text-indigo-600">
-                <Square size={20} />
+                <Maximize size={20} strokeWidth={1.5} />
               </div>
               <span className="text-xs font-black text-gray-900">{property.floor_size_m2 || 0}</span>
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">m²</span>
@@ -452,15 +452,15 @@ export default function Properties() {
             />
           </div>
           <div className="bg-white border border-gray-200 rounded-xl p-1 flex" role="tablist" aria-label="View mode">
-            <button
-              role="tab"
-              aria-selected={viewMode === 'grid'}
-              aria-label="Grid view"
-              onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-lg transition-all focus-visible:ring-2 focus-visible:ring-indigo-500 outline-none ${viewMode === 'grid' ? 'bg-gray-100 text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
-            >
-              <LayoutGrid className="w-4 h-4" aria-hidden="true" />
-            </button>
+              <button
+                role="tab"
+                aria-selected={viewMode === 'grid'}
+                aria-label="Grid view"
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded-lg transition-all focus-visible:ring-2 focus-visible:ring-indigo-500 outline-none ${viewMode === 'grid' ? 'bg-gray-100 text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+              >
+                <LayoutDashboard className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+              </button>
             <button
               role="tab"
               aria-selected={viewMode === 'table'}
@@ -934,7 +934,7 @@ const PropertyCard: React.FC<{ property: Property }> = ({ property }) => {
         <div className="flex items-center justify-between py-4 border-y border-gray-50">
           <div className="flex items-center gap-2">
             <div className="p-1.5 bg-gray-50 rounded-lg" aria-hidden="true">
-              <Bed className="w-4 h-4 text-gray-400" />
+              <BedDouble className="w-4 h-4 text-gray-400" strokeWidth={1.5} />
             </div>
             <span className="text-xs font-bold text-gray-700">{property.bedrooms || property.beds || 0} Beds</span>
           </div>
@@ -946,7 +946,7 @@ const PropertyCard: React.FC<{ property: Property }> = ({ property }) => {
           </div>
           <div className="flex items-center gap-2">
             <div className="p-1.5 bg-gray-50 rounded-lg" aria-hidden="true">
-              <Square className="w-4 h-4 text-gray-400" />
+              <Maximize className="w-4 h-4 text-gray-400" strokeWidth={1.5} />
             </div>
             <span className="text-xs font-bold text-gray-700">{property.floor_size_m2 || property.sqft || 0} m²</span>
           </div>
@@ -988,4 +988,5 @@ const StatusBadge: React.FC<{ status: Property['status'] }> = ({ status }) => {
     </span>
   );
 }
+
 

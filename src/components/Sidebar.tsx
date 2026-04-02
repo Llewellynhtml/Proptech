@@ -1,18 +1,18 @@
 import React from 'react';
 import { 
-  LayoutGrid, 
-  Building2, 
-  UserRound, 
-  Magnet,
-  LineChart,
-  Sparkles,
-  Calendar, 
-  Settings, 
+  LayoutDashboard, 
+  Home, 
+  Users, 
+  Target,
+  BarChart3,
+  PlusSquare,
+  Clock, 
+  Settings2, 
   ChevronLeft, 
   ChevronRight,
   LogOut,
   Palette,
-  SendHorizontal,
+  Megaphone,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { clsx, type ClassValue } from 'clsx';
@@ -32,15 +32,15 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { id: 'dashboard', label: 'Overview', icon: LayoutGrid, section: 'Overview' },
-  { id: 'properties', label: 'Properties', icon: Building2, section: 'Management' },
-  { id: 'agents', label: 'Agents', icon: UserRound, section: 'Management' },
-  { id: 'leads', label: 'Leads', icon: Magnet, section: 'Management' },
-  { id: 'analytics', label: 'Analytics', icon: LineChart, section: 'Insights' },
-  { id: 'post-builder', label: 'Post Builder', icon: Sparkles, section: 'Marketing' },
-  { id: 'scheduled-posts', label: 'Scheduled Posts', icon: Calendar, section: 'Marketing' },
+  { id: 'dashboard', label: 'Overview', icon: LayoutDashboard, section: 'Overview' },
+  { id: 'properties', label: 'Properties', icon: Home, section: 'Management' },
+  { id: 'agents', label: 'Agents', icon: Users, section: 'Management' },
+  { id: 'leads', label: 'Leads', icon: Target, section: 'Management' },
+  { id: 'analytics', label: 'Analytics', icon: BarChart3, section: 'Insights' },
+  { id: 'post-builder', label: 'Post Builder', icon: PlusSquare, section: 'Marketing' },
+  { id: 'scheduled-posts', label: 'Scheduled Posts', icon: Clock, section: 'Marketing' },
   { id: 'branding', label: 'Branding', icon: Palette, section: 'System' },
-  { id: 'settings', label: 'Settings', icon: Settings, section: 'System' },
+  { id: 'settings', label: 'Settings', icon: Settings2, section: 'System' },
 ];
 
 const sections = ['Overview', 'Management', 'Insights', 'Marketing', 'System'];
@@ -82,7 +82,7 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
             className={cn("flex items-center gap-3", isCollapsed && "hidden")}
           >
             <div className="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200" aria-hidden="true">
-              <SendHorizontal className="text-white w-5 h-5" />
+              <Megaphone className="text-white w-5 h-5" strokeWidth={2.5} />
             </div>
             <div className="flex flex-col">
               <span className="font-black text-lg tracking-tight text-gray-900 leading-none">Prop-Post</span>
@@ -91,7 +91,7 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
           
           {isCollapsed && (
             <div className="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto lg:flex hidden shadow-lg shadow-indigo-200" aria-hidden="true">
-              <SendHorizontal className="text-white w-5 h-5" />
+              <Megaphone className="text-white w-5 h-5" strokeWidth={2.5} />
             </div>
           )}
 
@@ -129,7 +129,7 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
                     <item.icon className={cn(
                       "w-5 h-5 shrink-0 transition-transform duration-300 group-hover:scale-110",
                       activePage === item.id ? "text-indigo-600" : "text-gray-400 group-hover:text-gray-900"
-                    )} aria-hidden="true" />
+                    )} strokeWidth={1.5} aria-hidden="true" />
                     {!isCollapsed && (
                       <div className="flex items-center justify-between flex-1">
                         <span className="font-bold text-sm tracking-tight">{item.label}</span>
@@ -172,5 +172,6 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
     </>
   );
 }
+
 
 

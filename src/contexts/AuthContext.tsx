@@ -41,6 +41,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         logout();
       }
+    } else {
+      // Bypass login for now as requested by user
+      const mockUser: User = {
+        id: 1,
+        name: "System Admin",
+        email: "admin@proppost.co.za",
+        role: "admin"
+      };
+      setToken("mock-token");
+      setUser(mockUser);
     }
     setIsLoading(false);
   }, []);

@@ -246,7 +246,7 @@ function SecuritySettings() { return <div className="text-center py-20 text-gray
 function BillingSettings() { return <div className="text-center py-20 text-gray-400 font-bold">Billing settings content...</div>; }
 function IntegrationSettings() {
   const integrations = [
-    { id: 'zapier', name: 'Zapier', desc: 'Automate workflows between EstateHub and 5,000+ apps.', icon: Zap, status: 'Connected', color: 'bg-orange-50 text-orange-600' },
+    { id: 'zapier', name: 'Zapier', desc: 'Automate workflows between Prop-Post and 5,000+ apps.', icon: Zap, status: 'Connected', color: 'bg-orange-50 text-orange-600' },
     { id: 'mailchimp', name: 'Mailchimp', desc: 'Sync leads and segments for email marketing campaigns.', icon: Mail, status: 'Disconnected', color: 'bg-yellow-50 text-yellow-600' },
     { id: 'google', name: 'Google Calendar', desc: 'Sync appointments and follow-ups with your calendar.', icon: Globe, status: 'Connected', color: 'bg-blue-50 text-blue-600' },
     { id: 'stripe', name: 'Stripe', desc: 'Process payments for template purchases and subscriptions.', icon: CreditCard, status: 'Connected', color: 'bg-indigo-50 text-indigo-600' },

@@ -24,7 +24,14 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      let data;
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        throw new Error(`Server returned non-JSON response: ${response.status} ${response.statusText}. ${text.slice(0, 100)}`);
+      }
 
       if (!response.ok) {
         throw new Error(data.error || 'Login failed');
@@ -33,6 +40,7 @@ export default function Login() {
       login(data.token, data.user);
       navigate('/');
     } catch (err: any) {
+      console.error('Login error:', err);
       setError(err.message);
     } finally {
       setIsLoading(false);
@@ -202,3 +210,4 @@ export default function Login() {
     </div>
   );
 }
+

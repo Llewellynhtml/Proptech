@@ -15,7 +15,9 @@ import {
   Upload,
   Linkedin as LinkedinIcon,
   Instagram as InstagramIcon,
-  AlertTriangle
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { Agent } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
@@ -32,25 +34,40 @@ interface Props {
 export default function Agents({ agents, onUpdate, loading }: Props) {
   const { token } = useAuth();
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAdding, setIsAdding] = useState(() => {
+    return localStorage.getItem('proppost_agent_is_adding') === 'true';
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [agentToDelete, setAgentToDelete] = useState<Agent | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isBioExpanded, setIsBioExpanded] = useState(false);
 
-  const [newAgent, setNewAgent] = useState<Partial<Agent>>({
-    full_name: '',
-    role_optional: '',
-    profile_photo_url: 'https://picsum.photos/seed/agent/200/200',
-    email: '',
-    whatsapp_number: '',
-    cellphone_number: '',
-    office_number_optional: '',
-    bio_optional: '',
-    linkedin_url_optional: '',
-    instagram_url_optional: ''
+  const [newAgent, setNewAgent] = useState<Partial<Agent>>(() => {
+    const saved = localStorage.getItem('proppost_agent_draft');
+    return saved ? JSON.parse(saved) : {
+      full_name: '',
+      role_optional: '',
+      profile_photo_url: 'https://picsum.photos/seed/agent/200/200',
+      email: '',
+      whatsapp_number: '',
+      cellphone_number: '',
+      office_number_optional: '',
+      bio_optional: '',
+      linkedin_url_optional: '',
+      instagram_url_optional: ''
+    };
   });
+
+  // Persist draft and adding state
+  useEffect(() => {
+    localStorage.setItem('proppost_agent_draft', JSON.stringify(newAgent));
+  }, [newAgent]);
+
+  useEffect(() => {
+    localStorage.setItem('proppost_agent_is_adding', isAdding.toString());
+  }, [isAdding]);
 
   const filteredAgents = agents.filter(a => 
     (a.full_name?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
@@ -108,7 +125,7 @@ export default function Agents({ agents, onUpdate, loading }: Props) {
 
       if (response.ok) {
         setIsAdding(false);
-        setNewAgent({
+        const resetAgent = {
           full_name: '',
           role_optional: '',
           profile_photo_url: 'https://picsum.photos/seed/agent/200/200',
@@ -119,7 +136,9 @@ export default function Agents({ agents, onUpdate, loading }: Props) {
           bio_optional: '',
           linkedin_url_optional: '',
           instagram_url_optional: ''
-        });
+        };
+        setNewAgent(resetAgent);
+        localStorage.removeItem('proppost_agent_draft');
         onUpdate();
       } else {
         const error = await response.json();
@@ -641,9 +660,20 @@ export default function Agents({ agents, onUpdate, loading }: Props) {
               </div>
 
               <div className="space-y-4">
-                <h5 className="text-[10px] font-mono uppercase tracking-widest text-gray-400 border-b border-gray-100 pb-2">Biography</h5>
+                <div className="flex items-center justify-between border-b border-gray-100 pb-2">
+                  <h5 className="text-[10px] font-mono uppercase tracking-widest text-gray-400">Biography</h5>
+                  {selectedAgent.bio_optional && selectedAgent.bio_optional.length > 100 && (
+                    <button 
+                      onClick={() => setIsBioExpanded(!isBioExpanded)}
+                      className="text-[10px] font-bold text-brand-teal hover:underline uppercase tracking-widest flex items-center gap-1 outline-none focus-visible:ring-2 focus-visible:ring-brand-teal"
+                    >
+                      {isBioExpanded ? 'Show Less' : 'Read More'}
+                      {isBioExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                    </button>
+                  )}
+                </div>
                 <textarea 
-                  className="text-sm text-gray-600 leading-relaxed italic w-full bg-gray-50 p-3 rounded-xl border border-transparent focus:border-brand-teal outline-none min-h-[100px] resize-none focus-visible:border-brand-teal"
+                  className={`text-sm text-gray-600 leading-relaxed italic w-full bg-gray-50 p-3 rounded-xl border border-transparent focus:border-brand-teal outline-none transition-all resize-none focus-visible:border-brand-teal ${isBioExpanded ? 'h-[300px]' : 'h-[100px]'}`}
                   value={selectedAgent.bio_optional || ''}
                   placeholder="Add a short bio to help clients get to know the agent."
                   aria-label="Agent biography"
@@ -653,26 +683,50 @@ export default function Agents({ agents, onUpdate, loading }: Props) {
 
               <div className="space-y-4">
                 <h5 className="text-[10px] font-mono uppercase tracking-widest text-gray-400 border-b border-gray-100 pb-2">Social Presence</h5>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-xl border border-gray-100">
-                    <LinkedinIcon size={16} className="text-gray-400" aria-hidden="true" />
-                    <input 
-                      className="text-xs text-gray-600 bg-transparent outline-none flex-1"
-                      placeholder="LinkedIn URL"
-                      aria-label="LinkedIn URL"
-                      value={selectedAgent.linkedin_url_optional || ''}
-                      onChange={e => setSelectedAgent({...selectedAgent, linkedin_url_optional: e.target.value})}
-                    />
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-xl border border-gray-100">
+                      <LinkedinIcon size={16} className="text-gray-400" aria-hidden="true" />
+                      <input 
+                        className="text-xs text-gray-600 bg-transparent outline-none flex-1"
+                        placeholder="LinkedIn URL"
+                        aria-label="LinkedIn URL"
+                        value={selectedAgent.linkedin_url_optional || ''}
+                        onChange={e => setSelectedAgent({...selectedAgent, linkedin_url_optional: e.target.value})}
+                      />
+                    </div>
+                    {selectedAgent.linkedin_url_optional && (
+                      <a 
+                        href={selectedAgent.linkedin_url_optional} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-[10px] text-brand-teal hover:underline font-bold uppercase tracking-widest flex items-center gap-1 px-2"
+                      >
+                        <Globe size={10} /> View LinkedIn Profile
+                      </a>
+                    )}
                   </div>
-                  <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-xl border border-gray-100">
-                    <InstagramIcon size={16} className="text-gray-400" aria-hidden="true" />
-                    <input 
-                      className="text-xs text-gray-600 bg-transparent outline-none flex-1"
-                      placeholder="Instagram URL"
-                      aria-label="Instagram URL"
-                      value={selectedAgent.instagram_url_optional || ''}
-                      onChange={e => setSelectedAgent({...selectedAgent, instagram_url_optional: e.target.value})}
-                    />
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 bg-gray-50 p-2 rounded-xl border border-gray-100">
+                      <InstagramIcon size={16} className="text-gray-400" aria-hidden="true" />
+                      <input 
+                        className="text-xs text-gray-600 bg-transparent outline-none flex-1"
+                        placeholder="Instagram URL"
+                        aria-label="Instagram URL"
+                        value={selectedAgent.instagram_url_optional || ''}
+                        onChange={e => setSelectedAgent({...selectedAgent, instagram_url_optional: e.target.value})}
+                      />
+                    </div>
+                    {selectedAgent.instagram_url_optional && (
+                      <a 
+                        href={selectedAgent.instagram_url_optional} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-[10px] text-brand-teal hover:underline font-bold uppercase tracking-widest flex items-center gap-1 px-2"
+                      >
+                        <Globe size={10} /> View Instagram Profile
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

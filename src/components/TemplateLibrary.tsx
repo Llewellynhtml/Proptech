@@ -184,7 +184,7 @@ export default function TemplateLibrary({ onSelect, selectedTemplateId, property
       bathrooms: 2,
       parking: 10,
       floor_size_m2: 800,
-      short_description: "Premium office space in a high-traffic financial district.",
+      short_description: "Executive office space in a high-traffic financial district.",
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       images: [
@@ -225,7 +225,7 @@ export default function TemplateLibrary({ onSelect, selectedTemplateId, property
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-1">
           <h2 className="text-2xl font-serif italic text-gray-900">Template Library</h2>
-          <p className="text-sm text-gray-500">Browse and select a premium layout for your post.</p>
+          <p className="text-sm text-gray-500">Browse and select a professional layout for your post.</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[200px]">
@@ -575,7 +575,7 @@ export default function TemplateLibrary({ onSelect, selectedTemplateId, property
                     type="text" 
                     value={editingTemplate.tags || ''}
                     onChange={e => setEditingTemplate({...editingTemplate, tags: e.target.value})}
-                    placeholder="e.g. Premium, Modern, Dark Mode"
+                    placeholder="e.g. Modern, Dark Mode, Luxury"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1E97AB] outline-none transition-all"
                   />
                 </div>
@@ -665,3 +665,4 @@ export default function TemplateLibrary({ onSelect, selectedTemplateId, property
     </div>
   );
 }
+

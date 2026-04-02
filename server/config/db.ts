@@ -501,7 +501,7 @@ export const initDb = () => {
   `);
   
   const templates = [
-    [defaultAgencyId, "Premium Real Estate Flyer", "for_sale", "luxury", JSON.stringify(["1200x630"]), "https://picsum.photos/seed/flyer/1200/630", "Premium, Modular, Luxury, Facebook", "for_sale", "active"],
+    [defaultAgencyId, "Luxury Real Estate Flyer", "for_sale", "luxury", JSON.stringify(["1200x630"]), "https://picsum.photos/seed/flyer/1200/630", "Luxury, Modular, Professional, Facebook", "for_sale", "active"],
     [defaultAgencyId, "Exclusive Living Flyer", "for_sale", "luxury", JSON.stringify(["1200x630", "16:9"]), "https://picsum.photos/seed/exclusive/1100/620", "Exclusive, Luxury, Gold, Navy", "for_sale", "active"]
   ];
 
@@ -591,3 +591,4 @@ export const initDb = () => {
 };
 
 export default db;
+

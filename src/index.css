@@ -3,6 +3,9 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-brand-teal: #1E97AB;
+  --color-brand-dark-teal: #167a8a;
+  --color-brand-light-teal: #e6f5f7;
 }
 
 @layer base {
@@ -20,3 +23,4 @@
     scrollbar-width: none;
   }
 }
+

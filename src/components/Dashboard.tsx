@@ -64,10 +64,10 @@ const StatCard = ({ label, value, trend, icon: Icon, color, bg, delay = 0 }: any
   >
     <div className="flex items-center justify-between mb-4">
       <div className={`p-3 ${bg} rounded-xl group-hover:scale-110 transition-transform`} aria-hidden="true">
-        <Icon className={`w-6 h-6 ${color}`} />
+        <Icon className={`w-6 h-6 ${color}`} strokeWidth={1.5} />
       </div>
       <button className="p-1 hover:bg-gray-50 rounded-lg text-gray-400 outline-none focus-visible:ring-2 focus-visible:ring-indigo-500" aria-label={`More options for ${label}`}>
-        <MoreVertical className="w-4 h-4" />
+        <MoreVertical className="w-4 h-4" strokeWidth={1.5} />
       </button>
     </div>
     <div className="space-y-1">
@@ -198,7 +198,7 @@ export default function Dashboard() {
               <div key={task.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
                 <div className="flex items-center gap-4">
                   <div className="p-2 bg-white rounded-lg shadow-sm">
-                    <Clock className="w-4 h-4 text-indigo-600" />
+                    <Clock className="w-4 h-4 text-indigo-600" strokeWidth={1.5} />
                   </div>
                   <div>
                     <p className="text-sm font-bold text-gray-900">{task.title}</p>
@@ -206,7 +206,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <button className="p-2 hover:bg-white rounded-lg text-gray-400 transition-colors">
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
                 </button>
               </div>
             ))}
@@ -223,7 +223,7 @@ export default function Dashboard() {
               <div key={lead.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
                 <div className="flex items-center gap-4">
                   <div className="p-2 bg-white rounded-lg shadow-sm">
-                    <Users className="w-4 h-4 text-emerald-600" />
+                    <Users className="w-4 h-4 text-emerald-600" strokeWidth={1.5} />
                   </div>
                   <div>
                     <p className="text-sm font-bold text-gray-900">{lead.contact_name}</p>
@@ -443,26 +443,26 @@ export default function Dashboard() {
         
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl border border-gray-200" role="tablist" aria-label="Dashboard View Toggle">
-            <button 
-              role="tab"
-              aria-selected={activeView === 'stats'}
-              aria-label="Statistics View"
-              onClick={() => setActiveView('stats')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${activeView === 'stats' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              <TrendingUp className="w-3 h-3" aria-hidden="true" />
-              Stats
-            </button>
-            <button 
-              role="tab"
-              aria-selected={activeView === 'map'}
-              aria-label="Map View"
-              onClick={() => setActiveView('map')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${activeView === 'map' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              <MapIcon className="w-3 h-3" aria-hidden="true" />
-              Map View
-            </button>
+              <button 
+                role="tab"
+                aria-selected={activeView === 'stats'}
+                aria-label="Statistics View"
+                onClick={() => setActiveView('stats')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${activeView === 'stats' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                <TrendingUp className="w-3 h-3" strokeWidth={2} aria-hidden="true" />
+                Stats
+              </button>
+              <button 
+                role="tab"
+                aria-selected={activeView === 'map'}
+                aria-label="Map View"
+                onClick={() => setActiveView('map')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${activeView === 'map' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                <MapIcon className="w-3 h-3" strokeWidth={2} aria-hidden="true" />
+                Map View
+              </button>
           </div>
           <button 
             className="flex items-center gap-2 px-4 py-2 bg-white text-gray-700 rounded-xl border border-gray-200 shadow-sm hover:bg-gray-50 transition-all font-bold text-sm outline-none focus-visible:ring-2 focus-visible:ring-indigo-500" 
@@ -553,3 +553,4 @@ export default function Dashboard() {
     </motion.div>
   );
 }
+

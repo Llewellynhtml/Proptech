@@ -39,7 +39,7 @@ export default function TemplatePreview({ config, property, agent, branding }: P
     flexDirection: 'column',
   };
 
-  const isPremiumFlyer = config.templateId === '1';
+  const isLuxuryFlyer = config.templateId === '1';
   const isExclusiveLiving = config.templateId === '2';
 
   const getHeadlineStyle = (): React.CSSProperties => {
@@ -50,7 +50,7 @@ export default function TemplatePreview({ config, property, agent, branding }: P
       fontWeight: 800,
     };
     
-    if (isPremiumFlyer) {
+    if (isLuxuryFlyer) {
       base.fontSize = '32px';
       base.fontWeight = 900;
       base.color = '#0A192F';
@@ -186,7 +186,7 @@ export default function TemplatePreview({ config, property, agent, branding }: P
             </div>
           </div>
         </div>
-      ) : isPremiumFlyer ? (
+      ) : isLuxuryFlyer ? (
         <div className="flex flex-col h-full w-full bg-white p-16 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/2 h-full bg-white translate-x-12 z-0"></div>
           
@@ -243,3 +243,4 @@ export default function TemplatePreview({ config, property, agent, branding }: P
     </div>
   );
 }
+

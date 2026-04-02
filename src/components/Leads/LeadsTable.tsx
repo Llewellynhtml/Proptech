@@ -234,11 +234,11 @@ export default function LeadsTable({
                 <td className="px-6 py-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 text-xs text-gray-500">
-                      <Mail className="w-3 h-3" />
+                      <Mail className="w-3 h-3" strokeWidth={1.5} />
                       {lead.contactEmail || 'No email'}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-gray-500">
-                      <Phone className="w-3 h-3" />
+                      <Phone className="w-3 h-3" strokeWidth={1.5} />
                       {lead.contactPhone}
                     </div>
                   </div>

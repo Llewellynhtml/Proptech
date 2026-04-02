@@ -2,31 +2,36 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
-import { initDb } from "./server/config/db.js";
-import { initPostWorker } from "./server/workers/postWorker.js";
+import { initDb } from "./server/config/db.ts";
+import { initPostWorker } from "./server/workers/postWorker.ts";
 
 // Import Routes
-import authRoutes from "./server/routes/auth.js";
-import propertyRoutes from "./server/routes/properties.js";
-import agentRoutes from "./server/routes/agents.js";
-import amenityRoutes from "./server/routes/amenities.js";
-import brandingRoutes from "./server/routes/branding.js";
-import templateRoutes from "./server/routes/templates.js";
-import historyRoutes from "./server/routes/history.js";
-import postRoutes from "./server/routes/posts.js";
-import scheduleRoutes from "./server/routes/schedules.js";
-import uploadRoutes from "./server/routes/uploads.js";
-import leadRoutes from "./server/routes/leads.js";
-import analyticsRoutes from "./server/routes/analytics.js";
-import agencyRoutes from "./server/routes/agencies.js";
-import campaignRoutes from "./server/routes/campaigns.js";
-import commentRoutes from "./server/routes/comments.js";
+import authRoutes from "./server/routes/auth.ts";
+import propertyRoutes from "./server/routes/properties.ts";
+import agentRoutes from "./server/routes/agents.ts";
+import amenityRoutes from "./server/routes/amenities.ts";
+import brandingRoutes from "./server/routes/branding.ts";
+import templateRoutes from "./server/routes/templates.ts";
+import historyRoutes from "./server/routes/history.ts";
+import postRoutes from "./server/routes/posts.ts";
+import scheduleRoutes from "./server/routes/schedules.ts";
+import uploadRoutes from "./server/routes/uploads.ts";
+import leadRoutes from "./server/routes/leads.ts";
+import analyticsRoutes from "./server/routes/analytics.ts";
+import agencyRoutes from "./server/routes/agencies.ts";
+import campaignRoutes from "./server/routes/campaigns.ts";
+import commentRoutes from "./server/routes/comments.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Initialize Database
-initDb();
+try {
+  initDb();
+  console.log("Database initialized successfully");
+} catch (error) {
+  console.error("Failed to initialize database:", error);
+}
 
 // Initialize Post Worker
 try {
@@ -81,8 +86,8 @@ async function startServer() {
     });
   }
 
-  const PORT = 3000;
-  app.listen(PORT, "0.0.0.0", () => {
+  const PORT = process.env.PORT || 3000;
+  app.listen(Number(PORT), "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 }

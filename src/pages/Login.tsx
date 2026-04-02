@@ -9,8 +9,14 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +36,9 @@ export default function Login() {
         data = await response.json();
       } else {
         const text = await response.text();
-        throw new Error(`Server returned non-JSON response: ${response.status} ${response.statusText}. ${text.slice(0, 100)}`);
+        const errorMsg = `Server returned non-JSON response: ${response.status} ${response.statusText}. Content-Type: ${contentType}. Body: ${text.slice(0, 200)}...`;
+        console.error(errorMsg);
+        throw new Error(errorMsg);
       }
 
       if (!response.ok) {
@@ -210,4 +218,5 @@ export default function Login() {
     </div>
   );
 }
+
 

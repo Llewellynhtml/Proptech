@@ -86,7 +86,6 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
             </div>
             <div className="flex flex-col">
               <span className="font-black text-lg tracking-tight text-gray-900 leading-none">EstateHub</span>
-              <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-[0.2em] mt-1">Premium</span>
             </div>
           </motion.div>
           
@@ -134,12 +133,6 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
                     {!isCollapsed && (
                       <div className="flex items-center justify-between flex-1">
                         <span className="font-bold text-sm tracking-tight">{item.label}</span>
-                        {['dashboard', 'properties', 'agents', 'leads', 'analytics', 'post-builder'].includes(item.id) && (
-                          <span className="px-1.5 py-0.5 bg-amber-100 text-amber-700 text-[8px] font-black uppercase tracking-tighter rounded-md border border-amber-200 flex items-center gap-0.5">
-                            <Sparkles className="w-2 h-2" />
-                            Premium
-                          </span>
-                        )}
                       </div>
                     )}
                     {activePage === item.id && (
@@ -179,3 +172,4 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
     </>
   );
 }
+

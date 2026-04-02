@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { 
-  User, 
+  UserCircle, 
   Users, 
-  Building2, 
+  Home, 
   Target, 
   ChevronRight, 
   Check,
   CheckCircle2,
-  SendHorizontal
+  Megaphone
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { UserRole } from '../types';
@@ -17,8 +17,8 @@ interface OnboardingProps {
 }
 
 const roles: { id: UserRole; label: string; desc: string; icon: any }[] = [
-  { id: 'agent', label: 'Estate Agent', desc: 'Focus on property listings, lead management, and closing deals.', icon: User },
-  { id: 'developer', label: 'Property Developer', desc: 'Manage large projects, track construction progress, and bulk marketing.', icon: Building2 },
+  { id: 'agent', label: 'Estate Agent', desc: 'Focus on property listings, lead management, and closing deals.', icon: UserCircle },
+  { id: 'developer', label: 'Property Developer', desc: 'Manage large projects, track construction progress, and bulk marketing.', icon: Home },
   { id: 'marketer', label: 'Marketing Specialist', desc: 'Build campaigns, schedule social posts, and analyze performance.', icon: Target },
 ];
 
@@ -48,7 +48,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
           
           <div className="relative z-10">
             <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8">
-              <SendHorizontal className="w-6 h-6 text-white" />
+              <Megaphone className="w-6 h-6 text-white" strokeWidth={2.5} />
             </div>
             <h2 className="text-4xl font-black leading-tight">Welcome to Prop-Post</h2>
             <p className="text-indigo-100 mt-4 font-medium leading-relaxed">Let's personalize your experience to help you achieve more.</p>
@@ -167,3 +167,4 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
     </div>
   );
 }
+

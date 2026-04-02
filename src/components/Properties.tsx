@@ -988,5 +988,3 @@ const StatusBadge: React.FC<{ status: Property['status'] }> = ({ status }) => {
     </span>
   );
 }
-
-

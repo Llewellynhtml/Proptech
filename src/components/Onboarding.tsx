@@ -7,7 +7,7 @@ import {
   ChevronRight, 
   Check,
   CheckCircle2,
-  Sparkles
+  SendHorizontal
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { UserRole } from '../types';
@@ -48,9 +48,9 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
           
           <div className="relative z-10">
             <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8">
-              <Sparkles className="w-6 h-6 text-white" />
+              <SendHorizontal className="w-6 h-6 text-white" />
             </div>
-            <h2 className="text-4xl font-black leading-tight">Welcome to EstateHub</h2>
+            <h2 className="text-4xl font-black leading-tight">Welcome to Prop-Post</h2>
             <p className="text-indigo-100 mt-4 font-medium leading-relaxed">Let's personalize your experience to help you achieve more.</p>
           </div>
 

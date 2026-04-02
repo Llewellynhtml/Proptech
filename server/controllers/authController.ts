@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import db from "../config/db.js";
-import { AuthRequest } from "../middleware/auth.js";
+import db from "../config/db.ts";
+import { AuthRequest } from "../middleware/auth.ts";
 
 const JWT_SECRET = process.env.JWT_SECRET || "super-secret-key";
 
@@ -25,10 +25,11 @@ export const register = async (req: Request, res: Response) => {
       userId: result.lastInsertRowid,
     });
   } catch (error: any) {
+    console.error("Registration error:", error);
     if (error.code === "SQLITE_CONSTRAINT_UNIQUE") {
       return res.status(400).json({ error: "Email already exists." });
     }
-    res.status(500).json({ error: "Internal server error." });
+    res.status(500).json({ error: "Internal server error.", message: error.message });
   }
 };
 
@@ -86,8 +87,9 @@ export const login = async (req: Request, res: Response) => {
         agency_id: user.agency_id,
       },
     });
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error." });
+  } catch (error: any) {
+    console.error("Login error:", error);
+    res.status(500).json({ error: "Internal server error.", message: error.message });
   }
 };
 
@@ -102,7 +104,9 @@ export const getMe = (req: AuthRequest, res: Response) => {
       return res.status(404).json({ error: "User not found" });
     }
     res.json(user);
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error." });
+  } catch (error: any) {
+    console.error("getMe error:", error);
+    res.status(500).json({ error: "Internal server error.", message: error.message });
   }
 };
+

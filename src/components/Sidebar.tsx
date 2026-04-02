@@ -12,7 +12,7 @@ import {
   ChevronRight,
   LogOut,
   Palette,
-  Home,
+  SendHorizontal,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { clsx, type ClassValue } from 'clsx';
@@ -82,16 +82,16 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
             className={cn("flex items-center gap-3", isCollapsed && "hidden")}
           >
             <div className="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200" aria-hidden="true">
-              <Home className="text-white w-5 h-5" />
+              <SendHorizontal className="text-white w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-lg tracking-tight text-gray-900 leading-none">EstateHub</span>
+              <span className="font-black text-lg tracking-tight text-gray-900 leading-none">Prop-Post</span>
             </div>
           </motion.div>
           
           {isCollapsed && (
             <div className="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto lg:flex hidden shadow-lg shadow-indigo-200" aria-hidden="true">
-              <Home className="text-white w-5 h-5" />
+              <SendHorizontal className="text-white w-5 h-5" />
             </div>
           )}
 
@@ -172,4 +172,5 @@ export default function Sidebar({ activePage, setActivePage, isCollapsed, setIsC
     </>
   );
 }
+
 
